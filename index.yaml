@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  unbound:
+  - apiVersion: v2
+    appVersion: 1.12.0
+    created: "2020-11-15T13:55:17.401991791Z"
+    description: A Helm chart for deploying an Unbound DoH resolver
+    digest: 9b80dac8e48b7d6b40a40210880ba3c1003501b4b6c6ddf732b51fc2c1217d97
+    name: unbound
+    type: application
+    urls:
+    - https://github.com/Theo024/helm-charts/releases/download/unbound-0.1.0/unbound-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-11-15T13:55:17.172242049Z"
