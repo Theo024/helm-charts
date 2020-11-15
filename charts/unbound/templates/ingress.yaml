@@ -8,7 +8,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    {{- if .values.ingress.issuer.cluster }}
+    {{- if .Values.ingress.issuer.cluster }}
     cert-manager.io/cluster-issuer: {{ .Values.ingress.issuer.name }}
     {{- else }}
     cert-manager.io/issuer: {{ .Values.ingress.issuer.name }}
