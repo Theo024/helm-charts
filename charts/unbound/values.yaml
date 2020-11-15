@@ -5,6 +5,11 @@ image:
   pullPolicy: Always
   tag: latest
 
+certificate:
+  issuer:
+    name: selfsigned-issuer
+    kind: Issuer
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

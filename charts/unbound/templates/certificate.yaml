@@ -5,7 +5,7 @@ metadata:
 spec:
   secretName: {{ include "unbound.fullname" . }}-tls
   dnsNames:
-    - {{ .Values.ingress.host }}
+    - {{ include "unbound.fullname" . }}
   issuerRef:
     name: {{ .Values.certificate.issuer.name }}
     kind: {{ .Values.certificate.issuer.kind }}
