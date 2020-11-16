@@ -7,8 +7,8 @@ metadata:
 data:
   unbound.conf: |
     server:
-      chroot: "/unbound/etc/unbound"
-      username: unbound
+      chroot: ""
+      username: ""
       directory: "/unbound/etc/unbound"
       use-syslog: no
       pidfile: "/unbound/etc/unbound/unbound.pid"

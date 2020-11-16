@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "pdns-recursor.fullname" . }}
+  labels:
+    {{- include "pdns-recursor.labels" . | nindent 4 }}
+data:
+  recursor.conf: |
+    disable-syslog: yes
+
+  dnsdist.conf: |
+    addDOHLocal("127.0.0.1:8053")
+    newServer("127.0.0.1:53")

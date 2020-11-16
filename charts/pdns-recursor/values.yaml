@@ -1,0 +1,46 @@
+replicaCount: 1
+
+pdnsRecursor:
+  image:
+    repository: ghcr.io/theo024/pdns-recursor
+    pullPolicy: Always
+    tag: latest
+    securityContext: {}
+    resources: {}
+
+dnsdist:
+  image:
+    repository: ghcr.io/theo024/dnsdist
+    pullPolicy: Always
+    tag: latest
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+service:
+  type: ClusterIP
+  port: 8053
+
+ingress:
+  enabled: false
+  host: pdns-recursor.local
+  tls: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

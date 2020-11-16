@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "pdns-recursor.fullname" . }}
+  labels:
+    {{- include "pdns-recursor.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "pdns-recursor.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "pdns-recursor.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "pdns-recursor.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: pdns-recursor
+          securityContext:
+            {{- toYaml .Values.pdnsRecursor.securityContext | nindent 12 }}
+          image: "{{ .Values.pdnsRecursor.image.repository }}:{{ .Values.pdnsRecursor.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.pdnsRecursor.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.pdnsRecursor.resources | nindent 12 }}
+          volumeMounts:
+            - name: pdsn-recursor-config
+              mountPath: /usr/local/etc/pdns-recursor.conf
+              subPath: pdns-recursor.conf
+        - name: dnsdist
+          securityContext:
+            {{- toYaml .Values.dnsdist.securityContext | nindent 12 }}
+          image: "{{ .Values.dnsdist.image.repository }}:{{ .Values.dnsdist.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.dnsdist.image.pullPolicy }}
+          ports:
+            - name: doh
+              containerPort: 8053
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.dnsdist.resources | nindent 12 }}
+          volumeMounts:
+            - name: dnsdist-config
+              mountPath: /usr/local/etc/dnsdist.conf
+              subPath: dnsdist.conf
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: pdsn-recursor-config
+          configMap:
+            name: {{ include "pdns-recursor.fullname" . }}
+            items:
+            - key: "pdns-recursor.conf"
+              path: "pdns-recursor.conf"
+        - name: dnsdist-config
+          configMap:
+            name: {{ include "pdns-recursor.fullname" . }}
+            items:
+            - key: "dnsdist.conf"
+              path: "dnsdist.conf"

@@ -42,8 +42,7 @@ spec:
               mountPath: /unbound/etc/unbound/unbound.conf
               subPath: unbound.conf
             - name: tls
-              mountPath: "/unbount/etc/unbound/tls"
-              readOnly: true
+              mountPath: "/unbound/etc/unbound/tls"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

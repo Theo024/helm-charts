@@ -1,0 +1,6 @@
+apiVersion: v2
+name: pdns-recursor
+description: A Helm chart for deploying pdns-recursor
+type: application
+version: 0.1.0
+appVersion: 4.4.0

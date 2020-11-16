@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pdns-recursor.fullname" . }}
+  labels:
+    {{- include "pdns-recursor.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: doh
+      protocol: TCP
+      name: doh
+  selector:
+    {{- include "pdns-recursor.selectorLabels" . | nindent 4 }}
