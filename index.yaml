@@ -3,6 +3,16 @@ entries:
   pdns-recursor:
   - apiVersion: v2
     appVersion: 4.4.0
+    created: "2020-11-16T22:42:31.328517414Z"
+    description: A Helm chart for deploying pdns-recursor
+    digest: 987b2ff5fa8daa44188c6ef9d0c282bb6e88da9ca32c03f13f223429f6e2a63c
+    name: pdns-recursor
+    type: application
+    urls:
+    - https://github.com/Theo024/helm-charts/releases/download/pdns-recursor-0.1.4/pdns-recursor-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 4.4.0
     created: "2020-11-16T22:19:59.259690466Z"
     description: A Helm chart for deploying pdns-recursor
     digest: a041e0dfcb54ce35260f0feac44d37406834355999da32576a4b70d9ab918cb8
