@@ -6,8 +6,10 @@ metadata:
     {{- include "pdns-recursor.labels" . | nindent 4 }}
 data:
   recursor.conf: |
-    disable-syslog: yes
+    disable-syslog=yes
+    local-address=127.0.0.1:5300
+    socket-dir=/tmp
 
   dnsdist.conf: |
     addDOHLocal("127.0.0.1:8053")
-    newServer("127.0.0.1:53")
+    newServer("127.0.0.1:5300")

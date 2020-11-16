@@ -35,8 +35,8 @@ spec:
             {{- toYaml .Values.pdnsRecursor.resources | nindent 12 }}
           volumeMounts:
             - name: pdsn-recursor-config
-              mountPath: /usr/local/etc/pdns-recursor.conf
-              subPath: pdns-recursor.conf
+              mountPath: /usr/local/etc/recursor.conf
+              subPath: recursor.conf
         - name: dnsdist
           securityContext:
             {{- toYaml .Values.dnsdist.securityContext | nindent 12 }}
@@ -69,11 +69,11 @@ spec:
           configMap:
             name: {{ include "pdns-recursor.fullname" . }}
             items:
-            - key: "pdns-recursor.conf"
-              path: "pdns-recursor.conf"
+              - key: "recursor.conf"
+                path: "recursor.conf"
         - name: dnsdist-config
           configMap:
             name: {{ include "pdns-recursor.fullname" . }}
             items:
-            - key: "dnsdist.conf"
-              path: "dnsdist.conf"
+              - key: "dnsdist.conf"
+                path: "dnsdist.conf"
