@@ -26,17 +26,6 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: pdns-recursor
-          securityContext:
-            {{- toYaml .Values.pdnsRecursor.securityContext | nindent 12 }}
-          image: "{{ .Values.pdnsRecursor.image.repository }}:{{ .Values.pdnsRecursor.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.pdnsRecursor.image.pullPolicy }}
-          resources:
-            {{- toYaml .Values.pdnsRecursor.resources | nindent 12 }}
-          volumeMounts:
-            - name: pdsn-recursor-config
-              mountPath: /usr/local/etc/recursor.conf
-              subPath: recursor.conf
         - name: dnsdist
           securityContext:
             {{- toYaml .Values.dnsdist.securityContext | nindent 12 }}
@@ -52,6 +41,17 @@ spec:
             - name: dnsdist-config
               mountPath: /usr/local/etc/dnsdist.conf
               subPath: dnsdist.conf
+        - name: pdns-recursor
+          securityContext:
+            {{- toYaml .Values.pdnsRecursor.securityContext | nindent 12 }}
+          image: "{{ .Values.pdnsRecursor.image.repository }}:{{ .Values.pdnsRecursor.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.pdnsRecursor.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.pdnsRecursor.resources | nindent 12 }}
+          volumeMounts:
+            - name: pdsn-recursor-config
+              mountPath: /usr/local/etc/recursor.conf
+              subPath: recursor.conf
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
